@@ -1,0 +1,66 @@
+/* Reset generale */
+body {
+       font-family: 'Roboto', sans-serif; /* Applica il font Roboto al corpo della pagina */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    padding-top: 130px;
+    background-color: #fff; /* Sfondo bianco */
+    color: #333; /* Testo scuro */
+}
+
+/* Stili per i link */
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Stili per le etichette */
+label {
+    width: 8em;
+    display: inline-block;
+}
+
+/* Stili per l'intestazione (header) */
+header {
+    background-color: #f7f7f7; /* Sfondo grigio chiaro per l'header */
+    padding: 10px 0; /* Spaziatura interna */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em; /* Dimensione del titolo grande */
+}
+
+header a {
+    text-decoration: none;
+    color: #333; /* Testo scuro per i link nell'header */
+    font-size: 1.2em; /* Dimensione del testo leggermente più grande */
+    margin-right: 20px;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+/* Stili per il contenuto principale */
+main {
+    padding: 20px;
+    text-align: left; /* Allinea il testo a sinistra nel contenuto principale */
+}
+
+
+/* Stili per i paragrafi di testo */
+p {
+    line-height: 1.6; /* Altezza della linea per una migliore leggibilità */
+	color: #becf0c;
+}
+
+.btn-primary {
+           background-color: #118209;
+           border: none;
+           transition: background-color 0.3s, transform 0.3s;
+       }

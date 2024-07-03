@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione ricette</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            padding-top: 80px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .error {
+            background-color: #ffe6e6;
+            border: 1px solid #ff9999;
+            color: #cc0000;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .btn-create {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-create:hover {
+            background-color: #218838;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="/#">
+            <img src="/images/logo.png" width="200" height="35" class="d-inline-block align-top" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <form action="/public/filterRecipes" method="get" class="form-inline ml-auto">
+                <input class="form-control mr-sm-2" type="text" id="name" name="name" placeholder="Cerca la tua ricetta!" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filtra</button>
+            </form>
+            <div class="navbar-text">
+                <span th:if="${#request.userPrincipal}">
+                    <a class="nav-link" href="/public/logout">Logout</a>
+                </span>
+                <span th:unless="${#request.userPrincipal}">
+                    <a class="nav-link" href="/public/login">Login</a>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Gestisci ricette</h1>
+        
+        <div th:if="${errorMessage}" class="error">
+            <p th:text="${errorMessage}"></p>
+        </div>
+        
+        <div th:if="${recipes == null || recipes.isEmpty()}" class="alert alert-info">
+            Non ci sono ricette nel sistema
+        </div>
+        
+        <ul>
+            <li th:each="recipe : ${recipes}">
+                <a th:href="@{'/public/recipe/' + ${recipe.id}}" th:text="${recipe.name} + ' (' + ${recipe.inventor.name} + ' ' + ${recipe.inventor.surname} + ')'"></a>
+                <div th:if="${authenticatedChef.name == recipe.inventor.name and authenticatedChef.surname == recipe.inventor.surname}">
+                    <form th:action="@{'/chef/deleteRecipeChef/' + ${recipe.id}}" method="post">
+                        <button type="submit" class="btn-delete">Elimina</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+        
+        <a href="/chef/formNewRecipe" class="btn-create">Crea Ricetta</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredienti - SiwFood</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .navbar-brand img {
+            height: 40px;
+        }
+        .container-custom {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-top: 6rem;
+        }
+        h1 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .ingredient-list {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .ingredient-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .ingredient-list li {
+            background-color: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        .ingredient-list li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .ingredient-list a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .add-ingredient-btn {
+            margin-top: 1.5rem;
+        }
+        .add-ingredient-btn button {
+            background-color: #28a745;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: #ffffff;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .add-ingredient-btn button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" alt="SiwFood Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form action="/public/filterRecipes" method="get" class="d-flex ms-auto me-3">
+                    <input class="form-control me-2" type="search" name="name" placeholder="Cerca la tua ricetta!" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Filtra</button>
+                </form>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/public/logout" th:if="${#request.userPrincipal}">Logout</a>
+                        <a class="nav-link" href="/public/login" th:unless="${#request.userPrincipal}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container container-custom">
+        <h1 class="text-center"><i class="fas fa-leaf me-2"></i>Ingredienti</h1>
+        <div class="ingredient-list">
+            <div th:if="${ingredients == null || ingredients.isEmpty()}" class="text-center text-muted">
+                Non ci sono ingredienti nel sistema
+            </div>
+            <ul>
+                <li th:each="ingredient : ${ingredients}">
+                        <i class="fas fa-carrot me-2"></i>
+                        <span th:text="${ingredient.name}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="add-ingredient-btn text-center">
+            <form action="/chef/formNewIngredient" method="get">
+                <button type="submit"><i class="fas fa-plus me-2"></i>Aggiungi ingrediente</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

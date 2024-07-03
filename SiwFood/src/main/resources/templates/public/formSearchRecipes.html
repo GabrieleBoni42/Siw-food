@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cerca Film</title>
+	    <link rel="stylesheet" href="/css/stile.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 20px auto; /* Assicurati che il margine superiore sia adeguato */
+            padding: 20px;
+            border: solid #4b4b4b 2px;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 17px 15px 21px -7px rgba(0, 0, 0, 0.75);
+        }
+
+        .container h1 {
+            color: #4b4b4b;
+            margin-bottom: 20px;
+            position: relative;
+            top: -50px;
+        }
+
+        .container .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container .buttons div {
+            margin-bottom: 10px;
+        }
+
+        .container a {
+            text-decoration: none;
+            color: #4b4b4b;
+            font-weight: bold;
+            display: inline-block;
+            padding: 15px 30px;
+            border: 1px solid #4b4b4b;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s, width 0.3s;
+            font-size: 1.2em;
+            width: 200px;
+            text-align: center;
+        }
+
+        .container a:hover {
+            background-color: rgb(182, 246, 239);
+            color: #4b4b4b;
+            width: 250px;
+        }
+
+        .card-body {
+            min-height: 200px; /* Altezza minima per uniformare */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 18rem;
+            margin: 80px;
+        }
+    </style>
+</head>
+
+<body>
+ <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="/#">
+        <img src="/images/logo.png" width="400" height="70" class="d-inline-block align-top" alt="Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+     <form action="/public/filterRecipes" method="get" class="form-inline ml-auto">
+    <input class="form-control mr-sm-2" type="text" id="name" name="name" placeholder="Cerca la tua ricetta!" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filtra</button>
+</form>
+        <div class="navbar-text">
+            <span th:if="${#request.userPrincipal}">
+               <a class="nav-link" href="/public/logout">Logout</a>
+            </span>
+            <span th:unless="${#request.userPrincipal}">
+                <a class="nav-link" href="/public/login">Login</a>
+            </span>
+        </div>
+    </div>
+</nav>
+
+	<h1>Cerca ricetta per nome</h1>
+	<form th:action="@{/searchRecipes}" method="post">
+		<div>Nome: <input type="text" th:value="${name}" name="name" />
+		</div>
+		<div><input type="submit" /></div>
+	</form>
+</body>
+
+</html>
